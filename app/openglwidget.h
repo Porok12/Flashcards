@@ -5,19 +5,21 @@
 #include <QOpenGLWidget>
 #include <QOpenGLFunctions>
 
-class OpenGLWidget : public QOpenGLWidget, QOpenGLFunctions
+class OpenGLWidget : public QOpenGLWidget, protected QOpenGLFunctions
 {
 public:
     OpenGLWidget(QWidget *parent  = 0);
     ~OpenGLWidget();
 protected:
-    void initializeGL();
-    void resieGL(int w, int h);
-    void paintGL();
+    void initializeGL() override;
+    void resizeGL(int w, int h) override;
+    void paintGL() override;
+    void mousePressEvent(QMouseEvent *event) override;
 private:
     QOpenGLShaderProgram *program;
     QOpenGLBuffer *vbo;
     QOpenGLVertexArrayObject *vao;
+    QMatrix4x4 projection, model, view;
 };
 
 #endif // OPENGLWIDGET_H
