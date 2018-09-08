@@ -16,10 +16,13 @@ protected:
     void paintGL() override;
     void mousePressEvent(QMouseEvent *event) override;
 private:
-    QOpenGLShaderProgram *program;
+    QOpenGLShaderProgram *program, *reverse;
     QOpenGLBuffer *vbo;
     QOpenGLVertexArrayObject *vao;
     QMatrix4x4 projection, model, view;
+
+    QOpenGLFramebufferObject *fbo;
+    QPainter *painter;
 };
 
 #endif // OPENGLWIDGET_H

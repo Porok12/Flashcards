@@ -13,6 +13,9 @@ OpenGLWidget::~OpenGLWidget()
     delete program;
     delete vao;
     delete vbo;
+    delete fbo;
+    delete reverse;
+    delete painter;
 }
 
 void OpenGLWidget::initializeGL()
@@ -29,6 +32,19 @@ void OpenGLWidget::initializeGL()
     program->addShader(vShader);
     program->addShader(fShader);
     program->link();
+
+    program->bind();
+    program->setUniformValue("tex", 0);
+
+    QOpenGLShader *vShader2 = new QOpenGLShader(QOpenGLShader::Vertex, this);
+    vShader2->compileSourceFile("/home/przemek/Projects/QtCreator/Flashcards/app/reverse.vert");
+    QOpenGLShader *fShader2 = new QOpenGLShader(QOpenGLShader::Fragment, this);
+    fShader2->compileSourceFile("/home/przemek/Projects/QtCreator/Flashcards/app/reverse.frag");
+    reverse = new QOpenGLShaderProgram;
+    reverse->addShader(vShader2);
+    reverse->addShader(fShader2);
+    reverse->link();
+
 
     vao = new QOpenGLVertexArrayObject;
     vao->create();
@@ -53,6 +69,18 @@ void OpenGLWidget::initializeGL()
     view.translate(QVector3D(0.0f, 0.0f, -2.0f));
     model.setToIdentity();
     //model.rotate(45.0f, QVector3D(0.0f, 1.0f, 0.0f));
+
+
+    QOpenGLFramebufferObjectFormat format;
+    format.setAttachment(QOpenGLFramebufferObject::NoAttachment);
+    format.setMipmap(false);
+    format.setSamples(4);
+    format.setTextureTarget(GL_TEXTURE_2D);
+    format.setInternalTextureFormat(GL_RGB16F);
+    fbo = new QOpenGLFramebufferObject(512, 512);
+//    // obverse reverse
+
+
 }
 
 void OpenGLWidget::resizeGL(int w, int h)
@@ -64,16 +92,37 @@ void OpenGLWidget::resizeGL(int w, int h)
 
 void OpenGLWidget::paintGL()
 {
-    //glViewport(0, 0, this->width(), this->height());
+    fbo->bind();
+    glClearColor(0.3f, 0.4f, 0.3f, 1.0f);
+    glClear(GL_COLOR_BUFFER_BIT);
+    //reverse->bind();
+    fbo->release();
+
+
+//    painter = new QPainter(this);
+//    painter->beginNativePainting();
+
 
     glClearColor(0.6f, 0.8f, 0.5f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT);
+
+    glActiveTexture(GL_TEXTURE0);
+    glBindTexture(GL_TEXTURE_2D, fbo->takeTexture());
 
     program->bind();
     program->setUniformValue(program->uniformLocation("project_matrix"), projection);
     program->setUniformValue(program->uniformLocation("mv_matrix"), view * model);
 
     glDrawArrays(GL_TRIANGLES, 0, 3);
+    program->release();
+
+
+
+//    painter->endNativePainting();
+//    painter->setPen(Qt::black);
+//    painter->setFont(QFont("Helvetica", 120));
+//    painter->drawText(80, 120, "text");
+//    painter->end();
 }
 
 void OpenGLWidget::mousePressEvent(QMouseEvent *event)

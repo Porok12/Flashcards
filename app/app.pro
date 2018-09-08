@@ -41,4 +41,8 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 
 DISTFILES += \
     flashcard.vert \
-    flashcard.frag
+    flashcard.frag \
+    reverse.frag \
+    reverse.vert \
+    obverse.frag \
+    obverse.vert
