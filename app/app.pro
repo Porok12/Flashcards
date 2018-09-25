@@ -9,6 +9,10 @@ QT       += core gui widgets opengl
 TARGET = app
 TEMPLATE = app
 
+INCLUDEPATH += /usr/local/include/freetype2/
+LIBS += -L/usr/local/lib -lfreetype
+
+
 # The following define makes your compiler emit warnings if you use
 # any feature of Qt which has been marked as deprecated (the exact warnings
 # depend on your compiler). Please consult the documentation of the
@@ -45,4 +49,6 @@ DISTFILES += \
     reverse.frag \
     reverse.vert \
     obverse.frag \
-    obverse.vert
+    obverse.vert \
+    font.frag \
+    font.vert

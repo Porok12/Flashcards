@@ -5,6 +5,9 @@
 #include <QOpenGLWidget>
 #include <QOpenGLFunctions>
 
+#include <ft2build.h>
+#include FT_FREETYPE_H
+
 class OpenGLWidget : public QOpenGLWidget, protected QOpenGLFunctions
 {
 public:
@@ -16,13 +19,20 @@ protected:
     void paintGL() override;
     void mousePressEvent(QMouseEvent *event) override;
 private:
-    QOpenGLShaderProgram *program, *reverse;
+    QOpenGLShaderProgram *program, *reverse, *font;
     QOpenGLBuffer *vbo;
     QOpenGLVertexArrayObject *vao;
     QMatrix4x4 projection, model, view;
 
     QOpenGLFramebufferObject *fbo;
     QPainter *painter;
+    GLuint texture;
+    QOpenGLTexture *tex;
+    void renderText(const char * text, float x, float y, int size);
+    QOpenGLBuffer *fontVbo;
+    QOpenGLVertexArrayObject *fontVao;
+    FT_Face face;
+    QMatrix4x4 ortho;
 };
 
 #endif // OPENGLWIDGET_H
