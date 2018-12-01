@@ -4,12 +4,19 @@
 #include <QtWidgets>
 #include <QOpenGLWidget>
 #include <QOpenGLFunctions>
+#include <QObject>
+#include <QTimer>
+
+#include "shaderprogram.h"
+#include "flashcardmesh.h"
+#include "textrenderer.h"
 
 #include <ft2build.h>
 #include FT_FREETYPE_H
 
 class OpenGLWidget : public QOpenGLWidget, protected QOpenGLFunctions
 {
+    Q_OBJECT
 public:
     OpenGLWidget(QWidget *parent  = 0);
     ~OpenGLWidget();
@@ -19,20 +26,17 @@ protected:
     void paintGL() override;
     void mousePressEvent(QMouseEvent *event) override;
 private:
-    QOpenGLShaderProgram *program, *reverse, *font;
-    QOpenGLBuffer *vbo;
-    QOpenGLVertexArrayObject *vao;
+    FlashcardMesh* mesh;
+    ShaderProgram *font, *program, *reverse;
+    TextRenderer* textRenderer;
+
     QMatrix4x4 projection, model, view;
 
     QOpenGLFramebufferObject *fbo;
-    QPainter *painter;
     GLuint texture;
     QOpenGLTexture *tex;
-    void renderText(const char * text, float x, float y, int size);
-    QOpenGLBuffer *fontVbo;
-    QOpenGLVertexArrayObject *fontVao;
-    FT_Face face;
     QMatrix4x4 ortho;
+    QTimer * timer;
 };
 
 #endif // OPENGLWIDGET_H

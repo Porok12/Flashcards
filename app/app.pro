@@ -29,11 +29,19 @@ CONFIG += c++11
 SOURCES += \
         main.cpp \
         mainwindow.cpp \
-    openglwidget.cpp
+    openglwidget.cpp \
+    shaderprogram.cpp \
+    flashcardmesh.cpp \
+    mesh.cpp \
+    textrenderer.cpp
 
 HEADERS += \
         mainwindow.h \
-    openglwidget.h
+    openglwidget.h \
+    shaderprogram.h \
+    flashcardmesh.h \
+    mesh.h \
+    textrenderer.h
 
 FORMS += \
         mainwindow.ui
