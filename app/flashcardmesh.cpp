@@ -8,8 +8,7 @@ FlashcardMesh::FlashcardMesh()
 
 FlashcardMesh::~FlashcardMesh()
 {
-    delete vao;
-    delete vbo;
+
 }
 
 void FlashcardMesh::draw()
@@ -21,17 +20,17 @@ void FlashcardMesh::draw()
 
 void FlashcardMesh::setupMesh()
 {
-    vao = new QOpenGLVertexArrayObject;
+    vao = std::unique_ptr<QOpenGLVertexArrayObject>(new QOpenGLVertexArrayObject);
     vao->create();
     vao->bind();
-    vbo = new QOpenGLBuffer;
+    vbo = std::unique_ptr<QOpenGLBuffer>(new QOpenGLBuffer);
     vbo->create();
     vbo->bind();
     static const float vertices[] = {
-            -0.5f, -0.5f, 0.0f, 0.0f,  0.0f,
-             0.5f, -0.5f, 0.0f, 1.0f,  0.0f,
-             0.5f,  0.5f, 0.0f, 1.0f,  1.0f,
-            -0.5f,  0.5f, 0.0f, 0.0f,  1.0f
+            -0.8f, -0.5f, 0.0f, 0.0f,  0.0f,
+             0.8f, -0.5f, 0.0f, 1.0f,  0.0f,
+             0.8f,  0.5f, 0.0f, 1.0f,  1.0f,
+            -0.8f,  0.5f, 0.0f, 0.0f,  1.0f
     };
     vbo->allocate(vertices, 20 * sizeof(float));
     glEnableVertexAttribArray(0);

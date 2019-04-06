@@ -9,23 +9,27 @@
 #include <ft2build.h>
 #include FT_FREETYPE_H
 
+#include "renderer.h"
 #include "shaderprogram.h"
+#include "text.h"
+#include "fontfactory.h"
 
-class TextRenderer : public QOpenGLFunctions
-{
-public:
-    TextRenderer();
-    ~TextRenderer();
-
-    QMatrix4x4 ortho;
-
-    void renderText(const char *text, float x, float y, int size);
+class TextRenderer : public Renderer
+{ 
 private:
-    QOpenGLVertexArrayObject* vao;
-    QOpenGLBuffer* vbo;
-    ShaderProgram* program;
+    typedef TextRenderer* rendererPointer; //typedef std::unique_ptr<TextRenderer> rendererPointer;
 
     void setupMesh();
+
+    static rendererPointer _uniqueRenderer;
+public:
+    TextRenderer(); //TODO: make it private
+    //~TextRenderer();
+
+    static rendererPointer getInstance();
+
+    void renderText(const char *text, float x, float y, int size);
+    void render(Graphic*);
 };
 
 #endif // TEXTRENDERER_H

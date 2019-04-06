@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui widgets opengl
+QT       += core gui widgets opengl sql
 
 TARGET = app
 TEMPLATE = app
@@ -32,16 +32,54 @@ SOURCES += \
     openglwidget.cpp \
     shaderprogram.cpp \
     flashcardmesh.cpp \
-    mesh.cpp \
-    textrenderer.cpp
+    textrenderer.cpp \
+    flashcard.cpp \
+    flashcardmanager.cpp \
+    databasemanager.cpp \
+    flashcardmodel.cpp \
+    decorator.cpp \
+    visualcomponent.cpp \
+    borderdecorator.cpp \
+    glyphfactory.cpp \
+    character.cpp \
+    glyph.cpp \
+    glyphcontext.cpp \
+    font.cpp \
+    fontfactory.cpp \
+    graphic.cpp \
+    text.cpp \
+    ractangle.cpp \
+    button.cpp \
+    shape.cpp \
+    renderer.cpp \
+    contextrenderer.cpp
 
 HEADERS += \
         mainwindow.h \
     openglwidget.h \
     shaderprogram.h \
     flashcardmesh.h \
-    mesh.h \
-    textrenderer.h
+    textrenderer.h \
+    flashcard.h \
+    flashcardmanager.h \
+    databasemanager.h \
+    flashcardmodel.h \
+    decorator.h \
+    visualcomponent.h \
+    borderdecorator.h \
+    glyphfactory.h \
+    character.h \
+    glyph.h \
+    glyphcontext.h \
+    font.h \
+    fontfactory.h \
+    graphic.h \
+    text.h \
+    ractangle.h \
+    button.h \
+    shape.h \
+    renderer.h \
+    contextrenderer.h
 
 FORMS += \
         mainwindow.ui
@@ -54,9 +92,5 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 DISTFILES += \
     flashcard.vert \
     flashcard.frag \
-    reverse.frag \
-    reverse.vert \
-    obverse.frag \
-    obverse.vert \
     font.frag \
     font.vert

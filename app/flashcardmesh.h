@@ -3,14 +3,12 @@
 
 #include <QOpenGLVertexArrayObject>
 #include <QOpenGLBuffer>
-
 #include <QOpenGLWidget>
 #include <QOpenGLFunctions>
 
 #include <QtWidgets>
 #include <QObject>
 
-//: public QOpenGLFunctions
 class FlashcardMesh : public QOpenGLFunctions
 {
 public:
@@ -19,8 +17,8 @@ public:
     void draw();
 private:
     void setupMesh();
-    QOpenGLVertexArrayObject *vao;
-    QOpenGLBuffer *vbo;
+    std::unique_ptr<QOpenGLVertexArrayObject> vao;
+    std::unique_ptr<QOpenGLBuffer> vbo;
 };
 
 #endif // FLASHCARDMESH_H

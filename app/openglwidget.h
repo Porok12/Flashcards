@@ -6,37 +6,38 @@
 #include <QOpenGLFunctions>
 #include <QObject>
 #include <QTimer>
-
+#include <memory>
 #include "shaderprogram.h"
-#include "flashcardmesh.h"
 #include "textrenderer.h"
+#include "flashcardmanager.h"
+#include "databasemanager.h"
+#include "contextrenderer.h"
 
 #include <ft2build.h>
 #include FT_FREETYPE_H
+
+#include "fontfactory.h"
 
 class OpenGLWidget : public QOpenGLWidget, protected QOpenGLFunctions
 {
     Q_OBJECT
 public:
-    OpenGLWidget(QWidget *parent  = 0);
-    ~OpenGLWidget();
+    OpenGLWidget(QWidget *parent = nullptr);
 protected:
     void initializeGL() override;
     void resizeGL(int w, int h) override;
     void paintGL() override;
     void mousePressEvent(QMouseEvent *event) override;
 private:
-    FlashcardMesh* mesh;
-    ShaderProgram *font, *program, *reverse;
-    TextRenderer* textRenderer;
+    std::shared_ptr<DatabaseManager> dbmanager;
+    std::unique_ptr<FlashcardManager> fcmanager;
+    std::shared_ptr<ShaderProgram> font, program;
+    std::shared_ptr<TextRenderer> textRenderer;
+    std::shared_ptr<QTimer> timer;
+    std::unique_ptr<ContextRenderer> _renderer;
 
-    QMatrix4x4 projection, model, view;
+    QMatrix4x4 projection, model, view, ortho;
 
-    QOpenGLFramebufferObject *fbo;
-    GLuint texture;
-    QOpenGLTexture *tex;
-    QMatrix4x4 ortho;
-    QTimer * timer;
 };
 
 #endif // OPENGLWIDGET_H
