@@ -11,25 +11,24 @@
 
 #include "renderer.h"
 #include "shaderprogram.h"
-#include "text.h"
 #include "fontfactory.h"
 
-class TextRenderer : public Renderer
+class TextRenderer : public Renderer//<TextRenderer>
 { 
 private:
-    typedef TextRenderer* rendererPointer; //typedef std::unique_ptr<TextRenderer> rendererPointer;
-
+    TextRenderer();
     void setupMesh();
 
-    static rendererPointer _uniqueRenderer;
+    static TextRenderer* _uniqueRenderer;
 public:
-    TextRenderer(); //TODO: make it private
     //~TextRenderer();
+    Font* _font;
 
-    static rendererPointer getInstance();
+    static TextRenderer* getInstance();
 
-    void renderText(const char *text, float x, float y, int size);
-    void render(Graphic*);
+    //void renderText(const char *text, float x, float y, int size);
+    void renderText2(const char *text, float x, float y, float size);
+    void setFont(FontName name, FontType type = FONT_NONE);
 };
 
 #endif // TEXTRENDERER_H

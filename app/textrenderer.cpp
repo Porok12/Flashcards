@@ -16,9 +16,9 @@ TextRenderer::TextRenderer()
     delete program;
 }*/
 
-TextRenderer::rendererPointer TextRenderer::_uniqueRenderer = nullptr;
+TextRenderer* TextRenderer::_uniqueRenderer = nullptr;
 
-TextRenderer::rendererPointer TextRenderer::getInstance()
+TextRenderer* TextRenderer::getInstance()
 {
     if(_uniqueRenderer == nullptr) {
         _uniqueRenderer = new TextRenderer();
@@ -43,8 +43,16 @@ void TextRenderer::setupMesh()
 
     vbo->release();
     vao->release();
+
+    _font = FontFactory::getInstance()->getFont(UBUNTU);
 }
 
+void TextRenderer::setFont(FontName name, FontType type)
+{
+    _font = FontFactory::getInstance()->getFont(name, type);
+}
+
+/*
 void TextRenderer::renderText(const char *text, float x, float y, int size)
 {
     FT_Library ft;
@@ -106,77 +114,27 @@ void TextRenderer::renderText(const char *text, float x, float y, int size)
     vao->release();
     program->release();
 }
-
-void TextRenderer::render(Graphic *graphic)
+*/
+void TextRenderer::renderText2(const char *text, float x, float y, float size)
 {
-    program->bind();
-    program->setUniformValue(program->uniformLocation("projection"), this->ortho);
-    vao->bind();
-    glActiveTexture(GL_TEXTURE0);
-
-    int x = dynamic_cast<Text*>(graphic)->getX();
-    int y = dynamic_cast<Text*>(graphic)->getY();
-    float scale = dynamic_cast<Text*>(graphic)->getSize();
-    Font* font = const_cast<Font*>(dynamic_cast<Text*>(graphic)->getFont());
-    const char* ptr = dynamic_cast<Text*>(graphic)->getText().c_str();
-    return;
-    for (; *ptr ; ptr++) {
-        Character* ch = font->getCharacter(*ptr);
-
-        GLfloat xpos = x + ch->xBearing() * scale;
-        GLfloat ypos = y - (ch->height() - ch->yBearing()) * scale;
-
-        GLfloat w = ch->width() * scale;
-        GLfloat h = ch->height() * scale;
-
-        GLfloat vertices[6][4] = {
-            { xpos,     ypos + h,   0.0, 1.0 },
-            { xpos + w, ypos,       1.0, 0.0 },
-            { xpos,     ypos,       0.0, 0.0 },
-
-            { xpos,     ypos + h,   0.0, 1.0 },
-            { xpos + w, ypos + h,   1.0, 1.0 },
-            { xpos + w, ypos,       1.0, 0.0 }
-        };
-
-        glBindTexture(GL_TEXTURE_2D, ch->textureID());
-
-        vbo->bind();
-        vbo->write(0, vertices, sizeof(vertices));
-        glDrawArrays(GL_TRIANGLES, 0, 6);
-        vbo->release();
-
-        x += (ch->advance() >> 6) * scale;
-    }
-
-    vao->release();
-    program->release();
-
-    /*
-    dynamic_cast<Text*>(graphic)->draw();
-    Font* font = dynamic_cast<Text*>(graphic)->getFont();
-    const char* text = dynamic_cast<Text*>(graphic)->getText().c_str();
-    FT_GlyphSlot g = font->getFace()->glyph;
-    int x = 0; int y = 0; // Text position
-    float size = 1.0f; // Text size
-
-
-    // Shader
-    program->bind();
-    program->setUniformValue(program->uniformLocation("projection"), this->ortho);
-    glActiveTexture(GL_TEXTURE0);
-    vao->bind();
-
-    // Render text
     const char *ptr;
+
+    program->bind();
+    program->setUniformValue(program->uniformLocation("projection"), this->ortho);
+    vao->bind();
+    glActiveTexture(GL_TEXTURE0);
+
     for(ptr = text; *ptr; ptr++)
     {
-        Character ch(*ptr); // Get proper character according to font
+        Character* ch = _font->getCharacter(*ptr);
+        if(ch == nullptr) {
+            continue;
+        }
 
-        float x2 = x + g->bitmap_left * size;
-        float y2 = y + (g->bitmap.rows - g->bitmap_top) * size;
-        float w = g->bitmap.width * size;
-        float h = g->bitmap.rows * size;
+        float x2 = x + ch->xBearing() * size;
+        float y2 = y - (ch->height() - ch->yBearing()) * size;
+        float w = ch->width() * size;
+        float h = ch->height() * size;
 
         GLfloat box[] = {
             x2,     y2 + h, 0.0f, 0.0f,
@@ -187,19 +145,15 @@ void TextRenderer::render(Graphic *graphic)
             x2 + w, y2 + h, 1.0f, 0.0f
         };
 
-        glBindTexture(GL_TEXTURE_2D, 0); // ch.getTexture()
+        glBindTexture(GL_TEXTURE_2D, ch->textureID());
 
         vbo->bind();
         vbo->write(0, box, sizeof(box));
+        glDrawArrays(GL_TRIANGLES, 0, 6);
         vbo->release();
 
-        glDrawArrays(GL_TRIANGLES, 0, 6);
-
-        x += (g->advance.x >> 6) * size;
-        //y += (g->advance.y / 64) * size;
+        x += (ch->advance() >> 6) * size;
     }
-
     vao->release();
     program->release();
-    */
 }

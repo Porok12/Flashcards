@@ -5,12 +5,14 @@
 #include <QOpenGLShader>
 #include <QOpenGLShaderProgram>
 
+#include "pathmanager.h"
+
 class ShaderProgram : public QOpenGLShaderProgram
 {
 public:
     ShaderProgram(QString name);
 private:
-    const QString dir = "/home/przemek/Projects/QtCreator/Flashcards/app";
+    const QString dir = PathManager::getInstance()->getPath(SHADERS_PATH).c_str();
 };
 
 #endif // SHADERPROGRAM_H

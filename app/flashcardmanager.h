@@ -24,8 +24,7 @@ public:
     FlashcardManager(std::shared_ptr<DatabaseManager> dbmanager);
     Flashcard getCard();
     void paint(std::shared_ptr<ShaderProgram> program,
-               std::shared_ptr<QTimer> timer,
-               std::shared_ptr<TextRenderer> textRenderer);
+               std::shared_ptr<QTimer> timer);
     void set(std::vector<Flashcard> fcards);
 
     void getNext();

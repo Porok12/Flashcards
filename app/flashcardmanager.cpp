@@ -14,10 +14,9 @@ Flashcard FlashcardManager::getCard()
 }
 
 void FlashcardManager::paint(std::shared_ptr<ShaderProgram> program,
-                             std::shared_ptr<QTimer> timer,
-                             std::shared_ptr<TextRenderer> textRenderer)
+                             std::shared_ptr<QTimer> timer)
 {
-    model.Draw(flashcard, program, timer, textRenderer); //fcards[2]
+    model.Draw(flashcard, program, timer); //fcards[2]
     /*if(counter++ >= 44) {
         counter = 0;
         this->timer->stop();

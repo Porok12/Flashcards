@@ -12,20 +12,23 @@
 #include <memory>
 
 #include "shaderprogram.h"
-#include "graphic.h"
-#include "text.h"
-//#include "textrenderer.h"
+#include "basicwidget.h"
 
+//template<class T>
 class Renderer : public QOpenGLFunctions
 {
 public:
     //Renderer();
-    ~Renderer();
+    virtual ~Renderer();
 
     QMatrix4x4 ortho;
 
-    virtual void render(Graphic*);
+    virtual void render2(BasicWidget*);
+
+    //static T* getInstance();
 protected:
+    //static T* _instance;
+
     QOpenGLVertexArrayObject* vao;
     QOpenGLBuffer* vbo;
     ShaderProgram* program;

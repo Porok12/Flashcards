@@ -27,9 +27,14 @@ DEFINES += QT_DEPRECATED_WARNINGS
 CONFIG += c++11
 
 SOURCES += \
+    basicwidget.cpp \
+    button.cpp \
+    label.cpp \
+    labelrenderer.cpp \
         main.cpp \
         mainwindow.cpp \
     openglwidget.cpp \
+    pathmanager.cpp \
     shaderprogram.cpp \
     flashcardmesh.cpp \
     textrenderer.cpp \
@@ -37,26 +42,20 @@ SOURCES += \
     flashcardmanager.cpp \
     databasemanager.cpp \
     flashcardmodel.cpp \
-    decorator.cpp \
-    visualcomponent.cpp \
-    borderdecorator.cpp \
-    glyphfactory.cpp \
     character.cpp \
-    glyph.cpp \
-    glyphcontext.cpp \
     font.cpp \
     fontfactory.cpp \
-    graphic.cpp \
-    text.cpp \
-    ractangle.cpp \
-    button.cpp \
-    shape.cpp \
     renderer.cpp \
     contextrenderer.cpp
 
 HEADERS += \
+    basicwidget.h \
+    button.h \
+    label.h \
+    labelrenderer.h \
         mainwindow.h \
     openglwidget.h \
+    pathmanager.h \
     shaderprogram.h \
     flashcardmesh.h \
     textrenderer.h \
@@ -64,20 +63,9 @@ HEADERS += \
     flashcardmanager.h \
     databasemanager.h \
     flashcardmodel.h \
-    decorator.h \
-    visualcomponent.h \
-    borderdecorator.h \
-    glyphfactory.h \
     character.h \
-    glyph.h \
-    glyphcontext.h \
     font.h \
     fontfactory.h \
-    graphic.h \
-    text.h \
-    ractangle.h \
-    button.h \
-    shape.h \
     renderer.h \
     contextrenderer.h
 

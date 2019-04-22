@@ -5,12 +5,16 @@ ContextRenderer::ContextRenderer()
     changeState(TextRenderer::getInstance());
 }
 
-void ContextRenderer::draw(Graphic *graphic)
+void ContextRenderer::render(BasicWidget *widget)
 {
-    _state->render(graphic);
+    if(Label* w = dynamic_cast<Label*>(widget)) {
+        changeState(LabelRenderer::getInstance());
+    }
+
+    _state->render2(widget);
 }
 
-void ContextRenderer::changeState(ContextRenderer::renderer_ptr state)
+void ContextRenderer::changeState(Renderer* state)
 {
     _state = state;
 }

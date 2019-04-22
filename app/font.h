@@ -6,26 +6,26 @@
 #include <string>
 #include <ft2build.h>
 #include FT_FREETYPE_H
-
-typedef std::string string;
-
 #include "character.h"
+#include "pathmanager.h"
+#include <QtWidgets> //qDebug()
+
+#define MAX_RANGE 128
 
 class Font
 {
 public:
-    Font(FT_Library&, string);
+    Font(FT_Library&, std::string);
     ~Font();
 
     void setSize(int width, int height);
-    const FT_Face& getFace();
-
-    Character* getCharacter(char);
+    Character* getCharacter(FT_ULong);
 private:    
     FT_Face _face;
-    Character* _character[128];
+    Character* _character[MAX_RANGE];
 
-    void createCharacter(char);
+    void loadCharacters();
+    Character* createCharacter(FT_ULong);
 };
 
 #endif // FONT_H

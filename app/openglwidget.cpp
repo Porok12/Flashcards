@@ -27,8 +27,6 @@ void OpenGLWidget::initializeGL()
     model.setToIdentity();
     //model.rotate(45.0f, QVector3D(0.0f, 1.0f, 0.0f));
 
-    textRenderer = std::shared_ptr<TextRenderer>(new TextRenderer());
-
     timer = std::shared_ptr<QTimer>(new QTimer(this));
     connect(timer.get(), SIGNAL(timeout()), this,  SLOT(update()));
     //timer->start(125);
@@ -38,10 +36,6 @@ void OpenGLWidget::initializeGL()
     fcmanager = std::unique_ptr<FlashcardManager>(new FlashcardManager(dbmanager));
 
     fcmanager->init(this);
-
-
-    FontFactory ff;
-    ff.createFont("/usr/share/fonts/truetype/ubuntu/Ubuntu-R.ttf");
 
     _renderer = std::unique_ptr<ContextRenderer>(new ContextRenderer());
 }
@@ -53,20 +47,17 @@ void OpenGLWidget::resizeGL(int w, int h)
     projection.perspective(45.0f, aspect, 0.1f, 100.0f);
     ortho.setToIdentity();
     ortho.ortho(0.0f, w, 0.0f, h, 0.0f, 2.0f);
-    textRenderer->ortho = ortho;
+
+    TextRenderer::getInstance()->ortho = ortho;
 }
 
 void OpenGLWidget::paintGL()
 {
-    fcmanager->paint(program, timer, textRenderer);
-    textRenderer->renderText("World!", 10, 10, 1.0f);
+    fcmanager->paint(program, timer);
+    TextRenderer::getInstance()->renderText2("World!", 10, 10, 1.0f);
 
-    FontFactory ff;
-    Text text("Abcd!", ff.createFont("/usr/share/fonts/truetype/ubuntu/Ubuntu-R.ttf"));
-    text.setPosition(200, 200);
-    text.setSize(1.0f);
-    _renderer->draw(&text);
-    //_renderer->draw(new Text("World!"));
+    _renderer->render(new Label());
+    _renderer->render(new Button());
 }
 
 void OpenGLWidget::mousePressEvent(QMouseEvent *event)

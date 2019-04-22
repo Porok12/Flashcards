@@ -3,21 +3,21 @@
 
 #include <memory>
 
-#include "graphic.h"
 #include "renderer.h"
 #include "textrenderer.h"
+#include "labelrenderer.h"
+#include "basicwidget.h"
 
 class ContextRenderer
 {
 private:
-    typedef Renderer* renderer_ptr;
-    renderer_ptr _state;
+    Renderer* _state;
 
-    void changeState(renderer_ptr);
+    void changeState(Renderer*);
 public:
     ContextRenderer();
 
-    void draw(Graphic*);
+    void render(BasicWidget* widget);
 };
 
 #endif // CONTEXTRENDERER_H

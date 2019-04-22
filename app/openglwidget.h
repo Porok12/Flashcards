@@ -17,6 +17,8 @@
 #include FT_FREETYPE_H
 
 #include "fontfactory.h"
+#include "label.h"
+#include "button.h"
 
 class OpenGLWidget : public QOpenGLWidget, protected QOpenGLFunctions
 {
@@ -32,7 +34,6 @@ private:
     std::shared_ptr<DatabaseManager> dbmanager;
     std::unique_ptr<FlashcardManager> fcmanager;
     std::shared_ptr<ShaderProgram> font, program;
-    std::shared_ptr<TextRenderer> textRenderer;
     std::shared_ptr<QTimer> timer;
     std::unique_ptr<ContextRenderer> _renderer;
 

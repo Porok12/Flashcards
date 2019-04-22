@@ -1,43 +1,41 @@
 #include "font.h"
 
-Font::Font(FT_Library &library, string path)
+Font::Font(FT_Library &library, std::string path)
 {
-    for (int i = 0; i < 128; i++) {
-        _character[i] = nullptr;
+    for (FT_ULong c = 0; c < MAX_RANGE; c++) {
+        _character[c] = nullptr;
     }
 
     FT_Error error;
-    error = FT_New_Face(library, path.c_str(), 0, &_face);
+    error = FT_New_Face(library, (PathManager::getInstance()->getPath(FONT_PATH) + path).c_str(), 0, &_face);
+    qInfo() << (PathManager::getInstance()->getPath(FONT_PATH) + path).c_str();
 
-    if(error == FT_Err_Unknown_File_Format) {
-      // Handle Error
+    if(error) {
+      qDebug() << "FT_Error: " << error;
     }
-    else if(error) {
-      // Handle Error
+    else {
+        setSize(0, 96);
+
+        loadCharacters();
     }
 
-    setSize(0, 96);
+    FT_Done_Face(_face);
 }
 
 Font::~Font()
 {
-    FT_Done_Face(_face);
+    //FT_Done_Face(_face);
 }
 
 void Font::setSize(int width, int height)
 {
     FT_Error error;
     if((error = FT_Set_Pixel_Sizes(_face, static_cast<FT_UInt>(width), static_cast<FT_UInt>(height)))) {
-        // Handle error
+        qDebug() << "FT_Set_Pixel_Sizes";
     }
 }
 
-const FT_Face& Font::getFace()
-{
-    return _face;
-}
-
-Character *Font::getCharacter(char c)
+Character *Font::getCharacter(FT_ULong c)
 {
     if(_character[c] == nullptr) {
         createCharacter(c);
@@ -45,32 +43,48 @@ Character *Font::getCharacter(char c)
     return _character[c];
 }
 
-void Font::createCharacter(char c)
+void Font::loadCharacters()
 {
-    Character* ch = new Character(c);
+    glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
+
+    for (FT_ULong c = 0; c < MAX_RANGE; c++) {
+        if (FT_Load_Char(_face, c, FT_LOAD_RENDER)) {
+            qInfo() << "FT_Load_Char";
+            continue;
+        }
+
+        _character[c] = createCharacter(c);
+    }
+
+    glBindTexture(GL_TEXTURE_2D, 0);
+}
+
+Character* Font::createCharacter(FT_ULong c)
+{
+    Character* ch = new Character(static_cast<char>(c));
 
     GLuint texture;
-    /*glGenTextures(1, &texture);
+    glGenTextures(1, &texture);
     glBindTexture(GL_TEXTURE_2D, texture);
     glTexImage2D(GL_TEXTURE_2D, 0, GL_RED,
         _face->glyph->bitmap.width,
         _face->glyph->bitmap.rows,
         0, GL_RED, GL_UNSIGNED_BYTE,
-        _face->glyph->bitmap.buffer);*/
+        _face->glyph->bitmap.buffer);
 
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
-    //ch->setTextureID(texture);
+    ch->setTextureID(texture);
     ch->setWidth(_face->glyph->bitmap.width);
     ch->setHeight(_face->glyph->bitmap.rows);
     ch->setXBearing(_face->glyph->bitmap_left);
     ch->setYBearing(_face->glyph->bitmap_top);
-    ch->setAdvance(_face->glyph->advance.x);
+    ch->setAdvance(static_cast<GLuint>(_face->glyph->advance.x));
 
-    //_character[c] = ch;
+    return ch;
 }
 
 /*Character *Font::getCharacter(char c)

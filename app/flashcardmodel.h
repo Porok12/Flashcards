@@ -16,8 +16,7 @@ private:
     int counter = 0;
 public:
     void Draw(Flashcard fc, std::shared_ptr<ShaderProgram> program,
-              std::shared_ptr<QTimer> timer,
-              std::shared_ptr<TextRenderer> textRenderer);
+              std::shared_ptr<QTimer> timer);
     std::unique_ptr<FlashcardMesh> mesh;
     FlashcardModel();
     ~FlashcardModel();
