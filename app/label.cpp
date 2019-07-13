@@ -5,6 +5,12 @@ Label::Label()
     _text = "Test!";
 }
 
+Label::Label(std::string text)
+    : _text(text)
+{
+
+}
+
 std::string Label::text() const
 {
     return _text;

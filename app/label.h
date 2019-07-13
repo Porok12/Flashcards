@@ -10,6 +10,7 @@ private:
     std::string _text;
 public:
     Label();
+    Label(std::string);
     std::string text() const;
     void setText(const std::string &text);
 };

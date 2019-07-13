@@ -20,6 +20,19 @@
 #include "label.h"
 #include "button.h"
 
+/* TODO:
+ * - Unit Tests
+ * - Develop database part
+ * - Develop
+ * - Documentation
+ *
+ *
+ * */
+
+/**
+ * @brief The OpenGLWidget class
+ */
+
 class OpenGLWidget : public QOpenGLWidget, protected QOpenGLFunctions
 {
     Q_OBJECT

@@ -54,9 +54,9 @@ void OpenGLWidget::resizeGL(int w, int h)
 void OpenGLWidget::paintGL()
 {
     fcmanager->paint(program, timer);
-    TextRenderer::getInstance()->renderText2("World!", 10, 10, 1.0f);
+    //TextRenderer::getInstance()->renderText2("World!", 10, 10, 1.0f);
 
-    _renderer->render(new Label());
+    _renderer->render((new Label("/ˈaI.sE.leIt/"))->setX(10)->setY(10));
     _renderer->render(new Button());
 }
 

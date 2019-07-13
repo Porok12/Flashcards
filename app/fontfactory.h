@@ -23,7 +23,8 @@ inline FontType operator|(FontType a, FontType b) {
 
 enum FontName {
     UBUNTU,
-    UBUNTU_MONO
+    UBUNTU_MONO,
+    IPA
 };
 
 class FontFactory
@@ -49,7 +50,7 @@ private:
     typedef  std::map<font_pair, Font> font_map;
     font_map _fonts;
 
-    void loadFont(FontName);
+    void loadFont(FontName name, FontType type = FONT_NONE);
 };
 
 #endif // FONTFACTORY_H

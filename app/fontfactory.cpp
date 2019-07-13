@@ -4,29 +4,31 @@ FontFactory* FontFactory::_instance = nullptr;
 const char* FontFactory::FontTypeStr[] = {"R", "B", "RI", "BI"};
 
 std::map<FontName, const char*> FontFactory::FontNameStr =
-        boost::assign::map_list_of (UBUNTU, "Ubuntu") (UBUNTU_MONO, "UbuntuMono");
+        boost::assign::map_list_of (UBUNTU, "Ubuntu") (UBUNTU_MONO, "UbuntuMono") (IPA, "ipa");
 
 FontFactory::FontFactory()
 {
-    /*if(FT_Init_FreeType(&_library)) {
+    if(FT_Init_FreeType(&_library)) {
         qDebug() << "Unable to init FreeType";
-    }*/
-
-    for (int font = UBUNTU; font <= UBUNTU_MONO; font++) {
-        FT_Init_FreeType(&_library);
-        loadFont(static_cast<FontName>(font));
-        FT_Done_FreeType(_library);
     }
 
-    //FT_Done_FreeType(_library);
+    for (int type = FONT_NONE; type <= (FONT_BOLD | FONT_ITALIC); type++) {
+        loadFont(UBUNTU, static_cast<FontType>(type));
+    }
+
+    for (int type = FONT_NONE; type <= (FONT_BOLD | FONT_ITALIC); type++) {
+        loadFont(UBUNTU_MONO, static_cast<FontType>(type));
+    }
+
+    loadFont(IPA, static_cast<FontType>(FONT_NONE));
+
+    FT_Done_FreeType(_library);
 }
 
-void FontFactory::loadFont(FontName name)
+void FontFactory::loadFont(FontName name, FontType type)
 {
-    _fonts.insert(std::make_pair(std::make_pair(name, FONT_NONE), Font(_library, getName(name, FONT_NONE))));
-    _fonts.insert(std::make_pair(std::make_pair(name, FONT_BOLD), Font(_library, getName(name, FONT_BOLD))));
-    _fonts.insert(std::make_pair(std::make_pair(name, FONT_ITALIC), Font(_library, getName(name, FONT_ITALIC))));
-    _fonts.insert(std::make_pair(std::make_pair(name, FONT_BOLD | FONT_ITALIC), Font(_library, getName(name, FONT_BOLD | FONT_ITALIC))));
+    _fonts.insert(std::make_pair(std::make_pair(name, type),
+                                 Font(_library, getName(name, type))));
 }
 
 const char *FontFactory::getFontType(FontType type)
