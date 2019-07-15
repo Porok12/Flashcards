@@ -22,7 +22,7 @@ void LabelRenderer::render2(BasicWidget *label)
     _label = dynamic_cast<Label*>(label);
     if(_label != nullptr) {
         TextRenderer::getInstance()->setFont(IPA, FONT_NONE);
-        TextRenderer::getInstance()->renderText2(_label->text().c_str(), _label->x(), _label->y(), 0.6f);
+        TextRenderer::getInstance()->renderText(_label->text().c_str(), _label->x(), _label->y(), 0.6f);
         TextRenderer::getInstance()->setFont(UBUNTU);
     }
 }

@@ -4,8 +4,7 @@
 #include <vector>
 #include "flashcard.h"
 #include "flashcardmodel.h"
-#include "textrenderer.h"
-#include "databasemanager.h"
+#include "../Renderer/textrenderer.h"
 #include <memory>
 
 class FlashcardManager : public QOpenGLWidget, protected QOpenGLFunctions
@@ -15,13 +14,12 @@ private:
     FlashcardModel model;
     Flashcard flashcard;
 
-    std::shared_ptr<DatabaseManager> dbmanager;
     std::unique_ptr<QTimer> timer;
 
     int fcID;
     int counter;
 public:
-    FlashcardManager(std::shared_ptr<DatabaseManager> dbmanager);
+    FlashcardManager();
     Flashcard getCard();
     void paint(std::shared_ptr<ShaderProgram> program,
                std::shared_ptr<QTimer> timer);

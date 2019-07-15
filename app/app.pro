@@ -10,6 +10,8 @@ TARGET = app
 TEMPLATE = app
 
 INCLUDEPATH += /usr/local/include/freetype2/
+INCLUDEPATH += ./GUI /
+               ./Renderer
 LIBS += -L/usr/local/lib -lfreetype
 
 
@@ -27,47 +29,43 @@ DEFINES += QT_DEPRECATED_WARNINGS
 CONFIG += c++11
 
 SOURCES += \
-    basicwidget.cpp \
-    button.cpp \
-    label.cpp \
-    labelrenderer.cpp \
+    GUI/basicwidget.cpp \
+    GUI/label.cpp \
+    Renderer/labelrenderer.cpp \
         main.cpp \
         mainwindow.cpp \
     openglwidget.cpp \
     pathmanager.cpp \
     shaderprogram.cpp \
     flashcardmesh.cpp \
-    textrenderer.cpp \
+    Renderer/textrenderer.cpp \
     flashcard.cpp \
     flashcardmanager.cpp \
-    databasemanager.cpp \
     flashcardmodel.cpp \
-    character.cpp \
-    font.cpp \
-    fontfactory.cpp \
-    renderer.cpp \
-    contextrenderer.cpp
+    GUI/character.cpp \
+    GUI/font.cpp \
+    GUI/fontfactory.cpp \
+    Renderer/renderer.cpp \
+    Renderer/contextrenderer.cpp
 
 HEADERS += \
-    basicwidget.h \
-    button.h \
-    label.h \
-    labelrenderer.h \
+    GUI/basicwidget.h \
+    GUI/label.h \
+    Renderer/labelrenderer.h \
         mainwindow.h \
     openglwidget.h \
     pathmanager.h \
     shaderprogram.h \
     flashcardmesh.h \
-    textrenderer.h \
+    Renderer/textrenderer.h \
     flashcard.h \
     flashcardmanager.h \
-    databasemanager.h \
     flashcardmodel.h \
-    character.h \
-    font.h \
-    fontfactory.h \
-    renderer.h \
-    contextrenderer.h
+    GUI/character.h \
+    GUI/font.h \
+    GUI/fontfactory.h \
+    Renderer/renderer.h \
+    Renderer/contextrenderer.h
 
 FORMS += \
         mainwindow.ui
@@ -81,4 +79,8 @@ DISTFILES += \
     flashcard.vert \
     flashcard.frag \
     font.frag \
-    font.vert
+    font.vert \
+    shaders/flashcard.frag \
+    shaders/flashcard.vert \
+    shaders/font.frag \
+    shaders/font.vert

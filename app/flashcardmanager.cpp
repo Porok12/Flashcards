@@ -1,26 +1,24 @@
 #include "flashcardmanager.h"
 
-FlashcardManager::FlashcardManager(std::shared_ptr<DatabaseManager> dbmanager) : model()
+FlashcardManager::FlashcardManager() : model()
 {
-    this->dbmanager = dbmanager;
-    flashcard = dbmanager->getFlashcard(fcID = 1);
     timer = std::unique_ptr<QTimer>(new QTimer(this));
     counter = 0;
+    Flashcard fc = Flashcard();
+    fc.word = "Kot";
+    fc.translation = "Cat";
+    fcards.push_back(fc);
 }
 
 Flashcard FlashcardManager::getCard()
 {
-    return fcards[1];
+    return fcards.front();
 }
 
 void FlashcardManager::paint(std::shared_ptr<ShaderProgram> program,
                              std::shared_ptr<QTimer> timer)
 {
-    model.Draw(flashcard, program, timer); //fcards[2]
-    /*if(counter++ >= 44) {
-        counter = 0;
-        this->timer->stop();
-    }*/
+    model.Draw(getCard(), program, timer);
 }
 
 void FlashcardManager::set(std::vector<Flashcard> fcards)
@@ -30,30 +28,21 @@ void FlashcardManager::set(std::vector<Flashcard> fcards)
 
 void FlashcardManager::getNext()
 {
-    flashcard = dbmanager->getFlashcard(++fcID % 3 + 1);
+
 }
 
 void FlashcardManager::init(const QObject* receiver)
 {
-    //connect(this, SIGNAL(next()), receiver, SLOT(func));
-    //connect(this, "next()", receiver, "update()");
     connect(timer.get(), SIGNAL(timeout()), receiver, SLOT(update()));
     timer->start(1);
-    //connect(this, SIGNAL(next()), receiver, SLOT(update()));
 }
 
 void FlashcardManager::next()
 {
-    flashcard = dbmanager->getFlashcard(fcID++%3+1);
-    /*if(!timer->isActive()) {
-        model.act = action::UPDATE;
-        timer->start(1);
-    }*/
+
 }
 
 void FlashcardManager::flip()
 {
     model.rotate(45);
-    //model.act = action::ROTATE;
-    //timer->start(1);
 }

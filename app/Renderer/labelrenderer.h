@@ -5,7 +5,7 @@
 #include "label.h"
 #include "textrenderer.h"
 
-class LabelRenderer : public Renderer//<LabelRenderer>
+class LabelRenderer : public Renderer
 {
 private:
     LabelRenderer();

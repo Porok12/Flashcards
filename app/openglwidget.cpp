@@ -25,15 +25,11 @@ void OpenGLWidget::initializeGL()
     view.setToIdentity();
     view.translate(QVector3D(0.0f, 0.0f, -2.0f));
     model.setToIdentity();
-    //model.rotate(45.0f, QVector3D(0.0f, 1.0f, 0.0f));
 
     timer = std::shared_ptr<QTimer>(new QTimer(this));
     connect(timer.get(), SIGNAL(timeout()), this,  SLOT(update()));
-    //timer->start(125);
 
-
-    dbmanager = std::shared_ptr<DatabaseManager>(new DatabaseManager("/home/przemek/Projects/QtCreator/Flashcards/app/database2.db"));
-    fcmanager = std::unique_ptr<FlashcardManager>(new FlashcardManager(dbmanager));
+    fcmanager = std::unique_ptr<FlashcardManager>(new FlashcardManager());
 
     fcmanager->init(this);
 
@@ -54,10 +50,8 @@ void OpenGLWidget::resizeGL(int w, int h)
 void OpenGLWidget::paintGL()
 {
     fcmanager->paint(program, timer);
-    //TextRenderer::getInstance()->renderText2("World!", 10, 10, 1.0f);
 
     _renderer->render((new Label("/ˈaI.sE.leIt/"))->setX(10)->setY(10));
-    _renderer->render(new Button());
 }
 
 void OpenGLWidget::mousePressEvent(QMouseEvent *event)
@@ -67,12 +61,6 @@ void OpenGLWidget::mousePressEvent(QMouseEvent *event)
     }
 
     if(event->button() == Qt::MouseButton::LeftButton) {
-        /*if(timer->isActive()) {
-            //timer->stop();
-        }
-        else {
-            timer->start(1);
-        }*/
         fcmanager->flip();
     }
 }

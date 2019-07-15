@@ -8,7 +8,7 @@
 #include FT_FREETYPE_H
 #include "character.h"
 #include "pathmanager.h"
-#include <QtWidgets> //qDebug()
+#include <QtWidgets>
 
 #define MAX_RANGE 128
 

@@ -3,7 +3,7 @@
 
 #include "flashcard.h"
 #include "flashcardmesh.h"
-#include "textrenderer.h"
+#include "../Renderer/textrenderer.h"
 
 enum action{NONE, ROTATE, UPDATE};
 
@@ -12,7 +12,6 @@ class FlashcardModel
 private:
     QMatrix4x4 projection, model, view;
     std::unique_ptr<QOpenGLFramebufferObject> fbo;
-    //std::unique_ptr<TextRenderer> textRenderer;
     int counter = 0;
 public:
     void Draw(Flashcard fc, std::shared_ptr<ShaderProgram> program,

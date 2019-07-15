@@ -8,26 +8,15 @@
 #include <QTimer>
 #include <memory>
 #include "shaderprogram.h"
-#include "textrenderer.h"
+#include "../Renderer/textrenderer.h"
 #include "flashcardmanager.h"
-#include "databasemanager.h"
-#include "contextrenderer.h"
+#include "../Renderer/contextrenderer.h"
 
 #include <ft2build.h>
 #include FT_FREETYPE_H
 
 #include "fontfactory.h"
 #include "label.h"
-#include "button.h"
-
-/* TODO:
- * - Unit Tests
- * - Develop database part
- * - Develop
- * - Documentation
- *
- *
- * */
 
 /**
  * @brief The OpenGLWidget class
@@ -44,7 +33,6 @@ protected:
     void paintGL() override;
     void mousePressEvent(QMouseEvent *event) override;
 private:
-    std::shared_ptr<DatabaseManager> dbmanager;
     std::unique_ptr<FlashcardManager> fcmanager;
     std::shared_ptr<ShaderProgram> font, program;
     std::shared_ptr<QTimer> timer;

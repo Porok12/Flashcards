@@ -25,14 +25,14 @@ void FlashcardModel::Draw(Flashcard fc, std::shared_ptr<ShaderProgram> program, 
     fbo->bind();
     glClearColor(0.7f, 0.8f, 0.9f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT);
-    TextRenderer::getInstance()->renderText2(fc.word.toStdString().c_str(), 100, 100, 1.0f);
+    TextRenderer::getInstance()->renderText(fc.word.toStdString().c_str(), 100, 100, 1.0f);
     fbo->release();
     GLuint texture = fbo->takeTexture();
 
     fbo->bind();
     glClearColor(0.7f, 0.8f, 0.9f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT);
-    TextRenderer::getInstance()->renderText2(fc.translation.toStdString().c_str(), 200, 100, 1.0f);
+    TextRenderer::getInstance()->renderText(fc.translation.toStdString().c_str(), 200, 100, 1.0f);
     fbo->release();
     GLuint texture2 = fbo->takeTexture();
     //fi

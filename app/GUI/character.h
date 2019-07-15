@@ -1,13 +1,9 @@
 #ifndef CHARACTER_H
 #define CHARACTER_H
 
-//#include "glyph.h"
-//#include <QOpenGLWidget>
 #include <QOpenGLFunctions>
 #include <QOpenGLBuffer>
-//#include <QOpenGLVertexArrayObject>
 #include <QVector2D>
-//#include "font.h"
 
 class Character
 {

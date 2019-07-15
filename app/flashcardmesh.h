@@ -5,7 +5,6 @@
 #include <QOpenGLBuffer>
 #include <QOpenGLWidget>
 #include <QOpenGLFunctions>
-
 #include <QtWidgets>
 #include <QObject>
 

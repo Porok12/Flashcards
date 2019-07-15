@@ -13,7 +13,7 @@
 #include "shaderprogram.h"
 #include "fontfactory.h"
 
-class TextRenderer : public Renderer//<TextRenderer>
+class TextRenderer : public Renderer
 { 
 private:
     TextRenderer();
@@ -21,13 +21,11 @@ private:
 
     static TextRenderer* _uniqueRenderer;
 public:
-    //~TextRenderer();
     Font* _font;
 
     static TextRenderer* getInstance();
 
-    //void renderText(const char *text, float x, float y, int size);
-    void renderText2(const char *text, float x, float y, float size);
+    void renderText(const char *text, float x, float y, float size);
     void setFont(FontName name, FontType type = FONT_NONE);
 };
 
