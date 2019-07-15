@@ -10,7 +10,6 @@ private:
 public:
     virtual ~BasicWidget();
 
-    //virtual void draw() = 0;
     BasicWidget* setX(int x);
     BasicWidget* setY(int y);
     int x() const;
