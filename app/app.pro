@@ -32,6 +32,7 @@ SOURCES += \
     GUI/basicwidget.cpp \
     GUI/label.cpp \
     Renderer/labelrenderer.cpp \
+    databasemanager.cpp \
         main.cpp \
         mainwindow.cpp \
     openglwidget.cpp \
@@ -52,6 +53,7 @@ HEADERS += \
     GUI/basicwidget.h \
     GUI/label.h \
     Renderer/labelrenderer.h \
+    databasemanager.h \
         mainwindow.h \
     openglwidget.h \
     pathmanager.h \
