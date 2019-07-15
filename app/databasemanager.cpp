@@ -13,7 +13,7 @@ void DatabaseManager::loadDatabase(const QString path)
     if(!db.open()) {
         qDebug() << db.lastError();
     } else {
-        qDebug() << "Connected to" << path;
+        qDebug() << "Connected to " << path;
     }
 }
 
