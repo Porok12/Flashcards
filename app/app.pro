@@ -53,6 +53,7 @@ HEADERS += \
     GUI/label.h \
     Renderer/labelrenderer.h \
         mainwindow.h \
+    messagelogginghandler.h \
     openglwidget.h \
     pathmanager.h \
     shaderprogram.h \

@@ -1,11 +1,12 @@
 #include "mainwindow.h"
 #include <QApplication>
 #include <QSurfaceFormat>
-
-
+#include "messagelogginghandler.h"
 
 int main(int argc, char *argv[])
 {
+    qInstallMessageHandler(myMessageOutput);
+
     QApplication a(argc, argv);
 
     QSurfaceFormat fmt;
@@ -23,3 +24,4 @@ int main(int argc, char *argv[])
 
     return a.exec();
 }
+
